@@ -68,12 +68,16 @@ train_set <-
 	cbind(subject_train, y_train, X_train) %>%
 	mutate(Source = "Train")
 
+## Merges training and test sets
+
+data_set <- rbind(test_set, train_set)
+
 ## 
 
 tidy_data <- 
-	rbind(test_set, train_set) %>%
+	data_set %>%
 	group_by(Subject, Activity) %>%
 	summarise_each(funs(mean), -Source)
 
 
-write.table(tidy_data, file = "tidy_data.txt")
+write.table(tidy_data, file = "tidy_data.txt", row.names = FALSE)
